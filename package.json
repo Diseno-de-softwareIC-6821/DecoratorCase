@@ -1,0 +1,24 @@
+{
+  "name": "decoratorcase",
+  "version": "1.0.0",
+  "description": "Crear sandwiches aplicando el patrón decorador y otros patrones  creacionales y estructurales que considere oportunos para la solución.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx ts-node src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Diseno-de-softwareIC-6821/DecoratorCase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Diseno-de-softwareIC-6821/DecoratorCase/issues"
+  },
+  "homepage": "https://github.com/Diseno-de-softwareIC-6821/DecoratorCase#readme",
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}
