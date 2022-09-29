@@ -2,12 +2,18 @@ import { EAditional } from "./Enumerators/EAditional";
 import { ESandwich } from "./Enumerators/ESandwich";
 import { ComponentFactory } from "./Factories/ComponentFactory";
 import { iComponent } from "./Interfaces/iComponent";
+import { Menu} from './Classes/menu';
+import { rawListeners } from "process";
+
+function hola(hola:string): void{
+    console.log("hola");
+}
 
 function main(): void{
 
 
     // obtiene un sandwich
-    let pedido: iComponent;
+    /*let pedido: iComponent;
     let is30cm: boolean = true;
 
     pedido = ComponentFactory.getNewSandwich(ESandwich.PAVO);
@@ -17,28 +23,32 @@ function main(): void{
     pedido = ComponentFactory.getNewAditional(EAditional.POSTRE, pedido);
 
     // imprime el precio del sandwich
-    console.log(pedido.getName()+": $"+pedido.getPrice(is30cm));
+    console.log(pedido.getName()+": $"+pedido.getPrice(is30cm));*/
 
     // make a console input to keep the console open
-    
+    /*
     const readline = require('readline').createInterface({
         input: process.stdin,
         output: process.stdout
-      });
+    });
 
       
     readline.question('Who are you?', (name: string) => {
     console.log(`Hey there ${name}!`);
     readline.close();
-    });
-
-    //get element by id
-    const element = document.getElementById("text");
+    });*/
     
     //webpack
-
+    let menu: Menu = new Menu();
     
+    menu.menuPrincipal();
 
-}
 
+
+
+
+
+
+
+    }
 main()
