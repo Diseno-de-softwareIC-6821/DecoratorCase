@@ -5,7 +5,6 @@ import { iComponent } from "./Interfaces/iComponent";
 
 function main(): void{
 
-    // crea un pedido de sandwich de pavo con aguacate
 
     // obtiene un sandwich
     let pedido: iComponent;
@@ -19,6 +18,22 @@ function main(): void{
 
     // imprime el precio del sandwich
     console.log(pedido.getName()+": $"+pedido.getPrice(is30cm));
+
+    // make a console input to keep the console open
+    
+    const readline = require('readline').createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+
+      
+    readline.question('Who are you?', (name: string) => {
+    console.log(`Hey there ${name}!`);
+    readline.close();
+    });
+
+
+    
 
 }
 
