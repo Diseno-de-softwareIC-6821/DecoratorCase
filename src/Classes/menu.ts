@@ -2,17 +2,13 @@ import { EAditional } from "../Enumerators/EAditional";
 import { ESandwich } from "../Enumerators/ESandwich";
 import { ComponentFactory } from "../Factories/ComponentFactory";
 import { iComponent } from '../Interfaces/iComponent';
-import { Sandwich } from "../Classes/Sandwich";
-/*
-var opcion: string;
-var opcionN: number;
-*/
 
+import { OrderItem } from '../Models/OrderItem';
 export class Menu{
-    static listaSandwiches: iComponent[] = [];
-    
-    constructor(
-    ){}
+    private listaSandwiches: OrderItem[] = [];
+    private prompt = require("prompt-sync")();
+
+    constructor(){}
     
     addSandwich (sandwichType: ESandwich):iComponent{
         return ComponentFactory.getNewSandwich(sandwichType);
@@ -24,22 +20,23 @@ export class Menu{
 
     printOrder (): void{
         console.log("Su pedido es: ");
-        Menu.listaSandwiches.forEach((sandwich) => {
-            console.log(sandwich);
+        this.listaSandwiches.forEach((orderItem) => {
+            console.log(orderItem.sandwich!.getName()+": $"+orderItem.sandwich!.getPrice(orderItem.is30cm));
         });
     }
     
-    //? Funcion que muestra el menú principal de sandwiches
+    // Funcion que muestra el menú principal de sandwiches
     public menuPrincipal(): void{
     
 
         let opcion: string = "";
+
         do{
             console.log("Bienvenido al TecWay");
             console.log("1. Hacer pedido");
             console.log("2. Salir");
-            const prompt = require("prompt-sync")();
-            opcion = prompt("Ingrese una opcion: ");
+            
+            opcion = this.prompt("Ingrese una opcion: ");
             switch (opcion) {
                 case "1":{
                     this.menuSandwiches();
@@ -68,34 +65,42 @@ export class Menu{
         console.log("4. Veggie");
         console.log("5. Atun");
         console.log("6. Pollo");
-        const prompt = require("prompt-sync")();
-        opcion = prompt("Ingrese un sandwich: ");
-        let sandwichPedido:iComponent;
+        
+        let sandwichPedido: OrderItem = {sandwich: null, is30cm: false};
+        opcion = this.prompt("Ingrese un sandwich: ");
+        sandwichPedido.is30cm = this.prompt("¿Desea un sandwich de 30cm? (y/n): ") == "y";
         switch (opcion) {
             case "1":{
-                sandwichPedido = this.addSandwich(ESandwich.PAVO);
+                this.prompt
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.PAVO);
+                break
             }
             case "2":{
-                sandwichPedido = this.addSandwich(ESandwich.ITALIANO);
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.ITALIANO);
+                break
             }
             case "3":{
-                sandwichPedido = this.addSandwich(ESandwich.BEEF);
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.BEEF);
+                break
             }
             case "4":{
-                sandwichPedido = this.addSandwich(ESandwich.VEGGIE);
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.VEGGIE);
+                break
             }
             case "5":{
-                sandwichPedido = this.addSandwich(ESandwich.ATUN);
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.ATUN);
+                break
             }
             case "6":{
-                sandwichPedido = this.addSandwich(ESandwich.POLLO);
+                sandwichPedido.sandwich = this.addSandwich(ESandwich.POLLO);
+                break
             }
-            this.menuAdicionales(sandwichPedido);
         }
-        //let sandwichPedido:iComponent = this.addSandwich(); 
+        this.prompt("Quiere agregar adicionales? (y/n): ") == "y"? this.menuAdicionales(sandwichPedido): this.listaSandwiches.push(sandwichPedido);
+    
     }
 
-    private menuAdicionales(sandwichAct: iComponent): void{
+    private menuAdicionales(sandwichAct: OrderItem): void{
         let opcion: string = "";
         console.log("\nMenú de Adicionales\n");
         console.log("1. Aguacate");
@@ -105,75 +110,45 @@ export class Menu{
         console.log("5. Sopa");
         console.log("6. Postre");
         do{
-            const prompt = require("prompt-sync")();
-            opcion = prompt("Ingrese un adicional: ");
+
+            opcion = this.prompt("Ingrese un adicional: ");
+
             switch (opcion) {
                 case "1":{
-                    this.addAditional(EAditional.AGUACATE, sandwichAct);
+                    sandwichAct.sandwich = this.addAditional(EAditional.AGUACATE, sandwichAct.sandwich!);
+                    break;
                 }
                 case "2":{
-                    this.addAditional(EAditional.DOBLE_PROTEINA, sandwichAct);
+                    sandwichAct.sandwich =  this.addAditional(EAditional.DOBLE_PROTEINA, sandwichAct.sandwich!);
+                    break
                 }
                 case "3":{
-                    this.addAditional(EAditional.HONGOS, sandwichAct);
+                    sandwichAct.sandwich =  this.addAditional(EAditional.HONGOS, sandwichAct.sandwich!);
+                    break
                 }
                 case "4":{
-                    this.addAditional(EAditional.REFRESCO, sandwichAct);
+                    sandwichAct.sandwich =  this.addAditional(EAditional.REFRESCO, sandwichAct.sandwich!);
+                    break
                 }
                 case "5":{
-                    this.addAditional(EAditional.SOPA, sandwichAct);
+                    sandwichAct.sandwich =  this.addAditional(EAditional.SOPA, sandwichAct.sandwich!);
+                    break
                 }
                 case "6":{
-                    this.addAditional(EAditional.POSTRE, sandwichAct);
+                    sandwichAct.sandwich =  this.addAditional(EAditional.POSTRE, sandwichAct.sandwich!);
+                    break
                 }
             }
             console.log("Desea agregar otro adicional?");
             console.log("1. Si");
             console.log("2. No");
-            const promt = require("prompt-sync");
-            opcion = prompt("Ingrese su opción: ");
+            
+            opcion = this.prompt("Ingrese su opción: ");
+
         }while(opcion != "2");
-        Menu.listaSandwiches.push(sandwichAct);
+        this.listaSandwiches.push(sandwichAct);
         console.log("Sandwich agregado al carrito exitosamente!");
     }
-    
-    /*
-    private input(nota: string): number{
-        const readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        /*let opcion:number = readline.question(nota, (dato: string): number => {
-            let num = Number(dato); // guarda el dato ingresado
-            readline.close(); // cierra el input
-            return num; //devuelve el input    
-        });
-        let opcion:number = readline.question(nota);
-        readline.close(); // cierra el input
-       
-        let salida: boolean = true; 
-        do{
-            if(opcion >= 0 && opcion <= 6){
-                salida = true;
-            }else{
-                console.log("Opcion invalida");
-                salida = false;
-                opcion = readline.question(nota, (dato: string): number => {
-                    let num = Number(dato);
-                    readline.close();
-                    return num;
-                });
-                readline.close();
-            }
-        }while(!salida);  
-        return opcion;
-        
-    }*/
-
-    
-    //AGUACATE,DOBLE PROTEINA,HONGOS,REFRESCO,SOPA,POSTRE
-    //AGUACATE,DOBLE PROTEINA,HONGOS,REFRESCO,SOPA,POSTRE
-    //AGUACATE,DOBLE PROTEINA,HONGOS,REFRESCO,SOPA,POSTRE
 
 }
 
