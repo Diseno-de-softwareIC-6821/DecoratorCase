@@ -32,6 +32,10 @@ function main(): void{
     readline.close();
     });
 
+    //get element by id
+    const element = document.getElementById("text");
+    
+    //webpack
 
     
 
